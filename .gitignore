@@ -484,4 +484,4 @@ $RECYCLE.BIN/
 *.swp
 
 #Appsettings
-INTEGRATIONS_SAP_MAGENTO/src/WebAPI/appsettings.json
+src/WebAPI/appsettings.json
