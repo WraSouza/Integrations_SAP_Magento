@@ -1,10 +1,10 @@
 
 
-namespace Domain.Entities.Request
+namespace Domain.Entities.EntitiesSAP
 {
-    public class LoginRequest
+    public class LoginRequest()
     {
-        public LoginRequest(string userName, string password, string companyDB)
+        public LoginRequest(string userName, string password, string companyDB) : this()
         {
             UserName = userName;
             Password = password;
@@ -13,6 +13,6 @@ namespace Domain.Entities.Request
 
         public string UserName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;       
-        public string CompanyDB { get; set; } = string.Empty;      
+        public string CompanyDB { get; set; } = string.Empty;          
     }
 }

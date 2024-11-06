@@ -1,9 +1,38 @@
+using System.Reflection;
+using Application.Queries.QueriesSAP.GetBusinessPartner;
+using Domain.DTOs.DTOSAP;
+using Domain.Entities.EntitiesSAP;
+using Domain.Repositories.SAPRepositories;
+using Infrastructure.Helpers;
+using Infrastructure.Repositories.RepositoriesSAP;
+using Microsoft.Extensions.DependencyInjection;
+using WebAPI.Controllers.ControllersSAP;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<LoginRequest>(builder.Configuration.GetSection("SAPLogin"));
+
+builder.Services.AddSingleton<IBusinessPartnerRepository, BusinessPartnerRepository>();
+
+builder.Services.AddSingleton<LoginHelper>();
+
+builder.Services.AddMemoryCache();
+
+builder.Services.AddSwaggerGen(opt => 
+{
+    opt.SwaggerDoc("v1", new () { Title = "API SAP Magento", Version = "v1" });
+});
+
+builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(GetBusinessPartnerQuery).Assembly); });
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+});
 
 var app = builder.Build();
 
@@ -14,31 +43,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapGroup("")
+.BusinessPartnerEndpoint()
+.WithTags("SAP - Business Partner");
+
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
