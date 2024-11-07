@@ -7,5 +7,6 @@ namespace Domain.Repositories.SAPRepositories
     {
         Task<BusinessPartnerDTO> CreateBusinessPartnerAsync(BusinessPartner businessPartner);
         Task<BusinessPartnerDTO> GetAllBusinessPartnerAsync();
+        Task<bool> VerifyIfBusinessPartnerExistsAsync(string cpf);
     }
 }

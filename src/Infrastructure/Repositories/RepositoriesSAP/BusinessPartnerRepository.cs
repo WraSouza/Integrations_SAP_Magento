@@ -39,5 +39,10 @@ namespace Infrastructure.Repositories.RepositoriesSAP
                  return businessPartner ?? new BusinessPartnerDTO("", null,"");
             }
         }
+
+        public Task<bool> VerifyIfBusinessPartnerExistsAsync(string cpf)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
