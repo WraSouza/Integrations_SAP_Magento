@@ -2,10 +2,13 @@ using System.Reflection;
 using Application.Queries.QueriesSAP.GetBusinessPartner;
 using Domain.DTOs.DTOSAP;
 using Domain.Entities.EntitiesSAP;
+using Domain.Repositories.MagentoRepositories;
 using Domain.Repositories.SAPRepositories;
 using Infrastructure.Helpers;
+using Infrastructure.Repositories.RepositoriesMagento;
 using Infrastructure.Repositories.RepositoriesSAP;
 using Microsoft.Extensions.DependencyInjection;
+using WebAPI.Controllers.ControllersMagento;
 using WebAPI.Controllers.ControllersSAP;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<LoginRequest>(builder.Configuration.GetSection("SAPLogin"));
 
 builder.Services.AddSingleton<IBusinessPartnerRepository, BusinessPartnerRepository>();
+builder.Services.AddSingleton<IOrdersRepository, OrdersRepository>();
 
 builder.Services.AddSingleton<LoginHelper>();
 
@@ -46,6 +50,10 @@ if (app.Environment.IsDevelopment())
 app.MapGroup("")
 .BusinessPartnerEndpoint()
 .WithTags("SAP - Business Partner");
+
+app.MapGroup("")
+.OrdersEndpoint()
+.WithTags("Magento - Orders");
 
 app.UseHttpsRedirection();
 

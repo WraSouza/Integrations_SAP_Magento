@@ -8,7 +8,7 @@ namespace WebAPI.Controllers.ControllersSAP
 {
     public static class BusinessPartnerControllers
     {
-         public static RouteGroupBuilder BusinessPartnerEndpoint(this RouteGroupBuilder app)
+        public static RouteGroupBuilder BusinessPartnerEndpoint(this RouteGroupBuilder app)
         {
           //Não será necessário mais tarde. Irá rodar de tempos em tempos com o Coravel.
             app.MapGet("/businesspartner", async (IMediator mediator) =>

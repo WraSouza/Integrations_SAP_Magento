@@ -11,9 +11,8 @@ namespace Domain.Entities.EntitiesMagento
         public Payment? payment { get; set; }
         public double? total_paid { get; set; }
         public double base_price { get; set; }
-        public int no_discount { get; set; }
         public double price { get; set; }
-        public int qty_shipped { get; set; }
+        public int qty_ordered { get; set; }
         public double row_invoiced { get; set; }
         public string sku { get; set; } = string.Empty;
        
